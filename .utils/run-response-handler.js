@@ -1,3 +1,4 @@
+import fs from 'fs';
 import readline from 'readline';
 
 const readStdin = () => new Promise((resolve) => {
@@ -15,12 +16,25 @@ const readStdin = () => new Promise((resolve) => {
         });
 });
 
+const loadSession = () => {
+    try {
+        const session = fs.readFileSync('.session.json');
+        return new Map(Object.entries(JSON.parse(session)));
+    } catch {
+        return new Map();
+    }
+};
+
 import(`${process.cwd()}/${process.argv[2]}`)
     .then((module) => {
         readStdin().then((response) => {
             if (module.default.responseHandler) {
-                console.log(response);
-                module.default.responseHandler(response);
+                const session = loadSession();
+                module.default.responseHandler({
+                    response,
+                    session,
+                });
+                fs.writeFileSync('.session.json', JSON.stringify(Object.fromEntries(session)))
             }
         })
     });
