@@ -1,6 +1,6 @@
 export default {
     config: {
-        url: `http://httpbin.org/get?test=${process.env.TEST}`,
+        url: 'http://httpbin.org/get',
     },
     responseHandler: console.log,
 }

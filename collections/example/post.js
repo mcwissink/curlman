@@ -5,8 +5,5 @@ export default {
             test: 1,
         }),
     },
-    responseHandler: ({ response, session }) => {
-        console.log(response);
-        session.set("TEST", 1);
-    },
+    responseHandler: console.log,
 }
