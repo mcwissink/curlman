@@ -28,13 +28,11 @@ const loadSession = () => {
 import(`${process.cwd()}/${process.argv[2]}`)
     .then((module) => {
         readStdin().then((response) => {
-            if (module.default.responseHandler) {
-                const session = loadSession();
-                module.default.responseHandler({
-                    response,
-                    session,
-                });
-                fs.writeFileSync('.session.json', JSON.stringify(Object.fromEntries(session)))
-            }
-        })
+            const session = loadSession();
+            module.default.responseHandler?.({
+                response,
+                session,
+            });
+            fs.writeFileSync('.session.json', JSON.stringify(Object.fromEntries(session)))
+        });
     });
