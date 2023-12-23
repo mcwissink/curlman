@@ -17,7 +17,7 @@ import(`${process.cwd()}/${process.argv[2]}`)
       Object.entries(module.default.config)
         .reduce((acc, [key, value]) => {
           if (Array.isArray(value)) {
-            value.forEach((arrayValue) => acc.push(formatKeyValue(key, arryaValue)));
+            value.forEach((arrayValue) => acc.push(formatKeyValue(key, arrayValue)));
           } else {
             acc.push(formatKeyValue(key, value));
           }
