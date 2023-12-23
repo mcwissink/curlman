@@ -2,12 +2,23 @@ import fs from 'fs';
 
 class Session {
   constructor() {
-    this.env = fs.existsSync('.session.json') ? JSON.parse(fs.readFileSync('.session.json')) : {};
+    this.env = this.read();
     this.envProxy = new Proxy(this.env, {
       get(target, prop) {
-        return prop in target ? target.prop : process.env[prop];
+        if (prop in target) {
+          return target.prop;
+        } else if (prop in process.env) {
+          return process.env[prop];
+        } else {
+          console.error(`Missing variable [${prop}]`);
+          process.exit(1);
+        }
       },
     })
+  }
+
+  read() {
+    fs.existsSync('.session.json') ? JSON.parse(fs.readFileSync('.session.json')) : {};
   }
 
   write() {
