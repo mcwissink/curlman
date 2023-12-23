@@ -15,6 +15,7 @@ class Session {
   }
 }
 
-export const session = new Session();
+const session = new Session();
 global.CM = session.envProxy;
+export { session };
 

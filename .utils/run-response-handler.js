@@ -17,11 +17,8 @@ const readStdin = () => new Promise((resolve) => {
     });
 });
 
-import(`${process.cwd()}/${process.argv[2]}`)
-  .then((module) => {
-    readStdin().then((response) => {
-      console.log(response)
-      module.default.responseHandler?.(response);
-      session.write();
-    });
-  });
+const response = await readStdin();
+console.log(response);
+const module = await import(`${process.cwd()}/${process.argv[2]}`);
+module.default.responseHandler?.(response);
+session.write();
