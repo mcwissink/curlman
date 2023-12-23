@@ -18,7 +18,7 @@ class Session {
   }
 
   read() {
-    fs.existsSync('.session.json') ? JSON.parse(fs.readFileSync('.session.json')) : {};
+    return fs.existsSync('.session.json') ? JSON.parse(fs.readFileSync('.session.json')) : {};
   }
 
   write() {
