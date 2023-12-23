@@ -14,8 +14,10 @@ const formatKeyValue = (key, value) => {
 }
 
 const module = await import(`${process.cwd()}/${process.argv[2]}`)
+const config = module.default.config
+
 console.log(
-  Object.entries(module.default.config)
+  Object.entries(typeof config === 'function' ? await config() : config)
     .reduce((acc, [key, value]) => {
       if (Array.isArray(value)) {
         value.forEach((arrayValue) => acc.push(formatKeyValue(key, arrayValue)));
