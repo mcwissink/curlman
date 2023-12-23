@@ -1,3 +1,5 @@
+import './session.js';
+
 const formatKeyValue = (key, value) => {
   switch (typeof value) {
     case 'number':
