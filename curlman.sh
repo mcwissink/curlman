@@ -1,10 +1,9 @@
 #!/bin/bash
 set -e
 
-INJECT_ENV="cat"
 DEFAULT_ENV_FILE=""
 CONFIG_FILE=.curlmanrc
-[ -f "$CONFIG_FILE" ] && source $CONFIG_FILE
+[ -f "$CONFIG_FILE" ] && source "$CONFIG_FILE"
 
 ENV_FILE="$DEFAULT_ENV_FILE"
 
@@ -24,6 +23,8 @@ done
 shift $((OPTIND-1))
 [ -z "$1" ] && usage
 
-env $([ -f "$ENV_FILE" ] && cat "$ENV_FILE" | eval "$INJECT_ENV") node .utils/format-config.js "$1" \
+[ -f "$ENV_FILE" ] && source "$ENV_FILE"
+
+node .utils/format-config.js "$1" \
     | curl -K - \
     | node .utils/run-response-handler.js "$1"

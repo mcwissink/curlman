@@ -1,1 +1,1 @@
-EXAMPLE_SECRET=example
+export EXAMPLE_SECRET=example
