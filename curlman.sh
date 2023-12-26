@@ -23,7 +23,9 @@ done
 shift $((OPTIND-1))
 [ -z "$1" ] && usage
 
+set -a
 [ -f "$ENV_FILE" ] && source "$ENV_FILE"
+set +a
 
 node .utils/format-config.js "$1" \
     | curl -K - \
